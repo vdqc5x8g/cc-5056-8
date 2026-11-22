@@ -1,0 +1,18 @@
+{
+  "method": "falloff",
+  "inner_width": 6.0,
+  "outer_width": 10.0,
+  "intensity": 1.0,
+  "blur_sigma": 12.0,
+  "dir_offset": 8.0,
+  "ray_count": 16,
+  "max_dist": 48.0,
+  "cone_angle": 1.2,
+  "falloff_tau": 24.0,
+  "allow_negative": false,
+  "deform_amp": 0.0,
+  "deform_freq": 0.12,
+  "strand_strength": 0.0,
+  "linear": true,
+  "use_occluder": true
+}

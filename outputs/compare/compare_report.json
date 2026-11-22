@@ -1,0 +1,53 @@
+[
+  {
+    "method": "blur",
+    "occluder": "none",
+    "wrap_energy_mean": 0.06500180344569972
+  },
+  {
+    "method": "falloff",
+    "occluder": "none",
+    "wrap_energy_mean": 0.06812092171353276
+  },
+  {
+    "method": "visibility",
+    "occluder": "none",
+    "wrap_energy_mean": 0.06812092171353276
+  },
+  {
+    "method": "blur",
+    "occluder": "near",
+    "wrap_energy_mean": 0.07482730725522237,
+    "wrap_energy_roi": 0.08221618320981461
+  },
+  {
+    "method": "falloff",
+    "occluder": "near",
+    "wrap_energy_mean": 0.07870425012874563,
+    "wrap_energy_roi": 0.0813650922597236
+  },
+  {
+    "method": "visibility",
+    "occluder": "near",
+    "wrap_energy_mean": 0.07278970807672198,
+    "wrap_energy_roi": 0.06227004152883088
+  },
+  {
+    "method": "blur",
+    "occluder": "far",
+    "wrap_energy_mean": 0.07142737575270984,
+    "wrap_energy_roi": 0.02904437931558417
+  },
+  {
+    "method": "falloff",
+    "occluder": "far",
+    "wrap_energy_mean": 0.07461129098618717,
+    "wrap_energy_roi": 0.030512556010222465
+  },
+  {
+    "method": "visibility",
+    "occluder": "far",
+    "wrap_energy_mean": 0.06855400095762636,
+    "wrap_energy_roi": 0.005015515785267578
+  }
+]
