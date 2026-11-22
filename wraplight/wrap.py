@@ -2,6 +2,7 @@ from dataclasses import dataclass, field
 
 import numpy as np
 
+from . import models
 from .blur import gaussian_blur
 from .rays import integrate_visible_background
 
@@ -46,13 +47,8 @@ def _clip_excess(excess, allow_negative):
     return np.clip(excess, 0.0, None)
 
 
-def wrap_blur(bg, alpha, band, params):
-    """办法一: 从附近像素近似包光.
-
-    对背景做高斯模糊, 并在朝背景侧偏移 dir_offset 处采样(方向限制),
-    只取超出局部背景的部分, 作用范围由边缘带限定(距离限制) ——
-    不是把整个背景模糊后叠到所有像素上.
-    """
+def _blur_excess(bg, band, params):
+    """局部背景平均估算的超出量(未乘带权重)."""
     blurred = gaussian_blur(bg, params.blur_sigma)
     ys, xs = np.nonzero(band.weight > 1e-4)
     excess = np.zeros_like(bg)
@@ -63,6 +59,17 @@ def wrap_blur(bg, alpha, band, params):
         sampled = _bilinear(blurred, sy, sx)
         local = bg[ys, xs]
         excess[ys, xs] = _clip_excess(sampled - local, params.allow_negative)
+    return excess, blurred
+
+
+def wrap_blur(bg, alpha, band, params):
+    """办法一: 从附近像素近似包光.
+
+    对背景做高斯模糊, 并在朝背景侧偏移 dir_offset 处采样(方向限制),
+    只取超出局部背景的部分, 作用范围由边缘带限定(距离限制) ——
+    不是把整个背景模糊后叠到所有像素上.
+    """
+    excess, blurred = _blur_excess(bg, band, params)
     weight = band.weight * params.intensity
     layer = excess * weight[:, :, None]
     return WrapResult(
@@ -111,6 +118,65 @@ def wrap_visibility(bg, alpha, band, params, occluder=None):
     return _wrap_via_rays(bg, alpha, band, params, occluder, use_occlusion=True)
 
 
+def _wrap_combined(bg, alpha, band, params, occluder):
+    """组合贡献模型: 同帧计算两种基础估算, 按模型规则逐像素组合.
+
+    组合在超出量(excess)域进行, 之后统一乘边缘带权重 —— 与单一模型
+    保持同一作用范围, 便于按边缘能量/主体色差直接对照.
+    """
+    excess_local, blurred = _blur_excess(bg, band, params)
+    vis = integrate_visible_background(
+        bg,
+        alpha,
+        band,
+        occluder=occluder if params.use_occluder else None,
+        ray_count=params.ray_count,
+        max_dist=params.max_dist,
+        cone_angle=params.cone_angle,
+        falloff_tau=params.falloff_tau,
+        use_occlusion=True,
+    )
+    excess_dir = _clip_excess(vis.integral - bg, params.allow_negative)
+
+    debug = {
+        "visibility": vis.visibility,
+        "blocked": vis.blocked,
+        "mean_hit_dist": vis.mean_hit_dist,
+        "integral": vis.integral,
+        "blurred_bg": blurred,
+        "excess_local_avg": excess_local,
+        "excess_dir_weighted": excess_dir,
+    }
+    if params.method == "depth_select":
+        threshold = models.require_threshold(params, "depth_threshold")
+        excess, near = models.combine_depth_select(
+            excess_dir, excess_local, vis.mean_hit_dist, threshold)
+        debug["select_dir_mask"] = near
+        debug["decision"] = (
+            f"depth_select: 平均命中距离 <= {threshold:g}px 的像素用方向加权, "
+            f"共 {int(near.sum())} 像素"
+        )
+    elif params.method == "vis_mix":
+        excess = models.combine_vis_mix(
+            excess_dir, excess_local, vis.visibility)
+        debug["decision"] = "vis_mix: 按可见背景份额混合两种估算"
+    elif params.method == "switch":
+        threshold = models.require_threshold(params, "occ_threshold")
+        excess, use_dir = models.combine_switch(
+            excess_dir, excess_local, vis.blocked, threshold)
+        debug["select_dir_mask"] = use_dir
+        debug["decision"] = (
+            f"switch: 遮挡比例 > {threshold:g} 的像素切到方向加权, "
+            f"共 {int(use_dir.sum())} 像素"
+        )
+    else:
+        raise ValueError(f"未知组合包光方法: {params.method}")
+
+    weight = band.weight * params.intensity
+    layer = excess * weight[:, :, None]
+    return WrapResult(layer=layer, excess=excess, weight=weight, debug=debug)
+
+
 def compute_wrap(bg, alpha, band, params, occluder=None):
     occ = occluder if params.use_occluder else None
     if params.method == "blur":
@@ -119,4 +185,6 @@ def compute_wrap(bg, alpha, band, params, occluder=None):
         return wrap_falloff(bg, alpha, band, params, occ)
     if params.method == "visibility":
         return wrap_visibility(bg, alpha, band, params, occ)
+    if params.method in models.COMBINED_METHODS:
+        return _wrap_combined(bg, alpha, band, params, occluder)
     raise ValueError(f"未知包光方法: {params.method}")

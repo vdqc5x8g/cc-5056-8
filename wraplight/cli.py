@@ -5,7 +5,7 @@ import sys
 
 import numpy as np
 
-from . import limitations, samples
+from . import experiments, limitations, models, samples
 from .colorspace import linear_to_srgb
 from .image import load_alpha, load_mask, load_rgb, save_gray, save_heatmap, save_rgb
 from .params import WrapParams
@@ -69,7 +69,10 @@ def cmd_run(args):
     if occ is not None:
         plate = tuple(float(v) for v in args.plate_color.split(","))
         bg = apply_occluder_to_bg(bg, occ, plate)
-    out = run_pipeline(fg, alpha, bg, params, occluder=occ)
+    try:
+        out = run_pipeline(fg, alpha, bg, params, occluder=occ)
+    except ValueError as e:
+        raise SystemExit(f"包光内核错误: {e}")
     _save_layers(args.out, out, params)
     _print_edge_report(out)
     print(f"结果已写入 {args.out}")
@@ -94,6 +97,10 @@ def _print_edge_report(out):
         "wrap_energy_max_in_band": float(energy[band].max()) if band.any() else 0.0,
         "wrap_energy_beyond_band_inside": float(energy[inside].max()) if inside.any() else 0.0,
     }
+    if out.metrics:
+        report["metrics"] = out.metrics
+    if out.debug.get("decision"):
+        report["decision"] = out.debug["decision"]
     print("边缘回查:", json.dumps(report, ensure_ascii=False, indent=2))
 
 
@@ -148,12 +155,29 @@ def cmd_compare(args):
     print(f"对照结果已写入 {args.out}")
 
 
+def cmd_experiment(args):
+    """仓库内包光模型实验: 结论与采样证据写入 outputs 目录."""
+    names = args.name if args.name else None
+    reports = experiments.run_experiments(args.out, size=args.size, names=names)
+    for rep in reports:
+        print(f"[{rep['experiment']}]")
+        for c in rep["conclusions"]:
+            print(f"  {c}")
+        if rep.get("eliminated"):
+            for e in rep["eliminated"]:
+                print(f"  淘汰: {e['method']} —— {e['reason']}")
+    print(f"实验证据与结论已写入 {args.out} (CONCLUSIONS.md)")
+
+
 def cmd_limitations(_args):
     print("支持的近似:")
     for i, t in enumerate(limitations.APPROXIMATIONS, 1):
         print(f"  {i}. {t}")
     print("\n易产生伪影的位置:")
     for i, t in enumerate(limitations.ARTIFACT_PRONE, 1):
+        print(f"  {i}. {t}")
+    print("\n贡献模型讨论的待验假设(单列):")
+    for i, t in enumerate(models.PENDING_ASSUMPTIONS, 1):
         print(f"  {i}. {t}")
 
 
@@ -187,6 +211,14 @@ def main(argv=None):
     p.add_argument("--out", default="outputs/compare")
     p.add_argument("--size", type=int, default=256)
     p.set_defaults(func=cmd_compare)
+
+    p = sub.add_parser("experiment", help="包光模型实验(结论与证据随工程保存)")
+    p.add_argument("--name", action="append", default=[],
+                   help="实验名(可多次); 缺省运行全部: " +
+                        ",".join(experiments.EXPERIMENTS))
+    p.add_argument("--out", default="outputs/experiments")
+    p.add_argument("--size", type=int, default=256)
+    p.set_defaults(func=cmd_experiment)
 
     p = sub.add_parser("limitations", help="列出支持的近似与易伪影位置")
     p.set_defaults(func=cmd_limitations)

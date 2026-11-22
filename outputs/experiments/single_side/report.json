@@ -1,0 +1,147 @@
+{
+  "experiment": "single_side",
+  "params": {
+    "inner_width": 16.0,
+    "outer_width": 26.666666666666664,
+    "intensity": 1.0,
+    "blur_sigma": 32.0,
+    "dir_offset": 21.333333333333332,
+    "ray_count": 16,
+    "max_dist": 128.0,
+    "cone_angle": 1.2,
+    "falloff_tau": 64.0,
+    "depth_threshold": 64.0,
+    "occ_threshold": 0.25,
+    "allow_negative": false,
+    "deform_amp": 0.0,
+    "deform_freq": 0.12,
+    "strand_strength": 0.0,
+    "linear": true,
+    "use_occluder": true
+  },
+  "runs": [
+    {
+      "method": "blur",
+      "metrics": {
+        "edge_energy": {
+          "mean": 0.13788191863740676,
+          "max": 2.1977895298950987,
+          "band_pixels": 20902
+        },
+        "subject_color_diff": {
+          "mean": 0.0,
+          "max": 0.0,
+          "interior_pixels": 0
+        },
+        "edge_blend": {
+          "mean": 0.13788191863740676,
+          "max": 2.1977895298950987
+        }
+      },
+      "edge_energy_left": 0.23322344911173615,
+      "edge_energy_right": 0.012166469635925582,
+      "side_ratio": 19.16936104645062,
+      "decision": "",
+      "evidence": "single_side/blur"
+    },
+    {
+      "method": "visibility",
+      "metrics": {
+        "edge_energy": {
+          "mean": 0.13906404839571743,
+          "max": 4.054119055074099,
+          "band_pixels": 20902
+        },
+        "subject_color_diff": {
+          "mean": 0.0,
+          "max": 0.0,
+          "interior_pixels": 0
+        },
+        "edge_blend": {
+          "mean": 0.13906404839571743,
+          "max": 4.054119055074099
+        }
+      },
+      "edge_energy_left": 0.21051471210550118,
+      "edge_energy_right": 0.04485062193779185,
+      "side_ratio": 4.693685460983945,
+      "decision": "",
+      "evidence": "single_side/visibility"
+    },
+    {
+      "method": "depth_select",
+      "metrics": {
+        "edge_energy": {
+          "mean": 0.13906404839571743,
+          "max": 4.054119055074099,
+          "band_pixels": 20902
+        },
+        "subject_color_diff": {
+          "mean": 0.0,
+          "max": 0.0,
+          "interior_pixels": 0
+        },
+        "edge_blend": {
+          "mean": 0.13906404839571743,
+          "max": 4.054119055074099
+        }
+      },
+      "edge_energy_left": 0.21051471210550118,
+      "edge_energy_right": 0.04485062193779185,
+      "side_ratio": 4.693685460983945,
+      "decision": "depth_select: 平均命中距离 <= 64px 的像素用方向加权, 共 65536 像素",
+      "evidence": "single_side/depth_select"
+    },
+    {
+      "method": "vis_mix",
+      "metrics": {
+        "edge_energy": {
+          "mean": 0.13868897711915393,
+          "max": 3.7655994324375137,
+          "band_pixels": 20902
+        },
+        "subject_color_diff": {
+          "mean": 0.0,
+          "max": 0.0,
+          "interior_pixels": 0
+        },
+        "edge_blend": {
+          "mean": 0.13868897711915393,
+          "max": 3.765599432437514
+        }
+      },
+      "edge_energy_left": 0.21195799810810023,
+      "edge_energy_right": 0.04207790085785559,
+      "side_ratio": 5.0372759521469685,
+      "decision": "vis_mix: 按可见背景份额混合两种估算",
+      "evidence": "single_side/vis_mix"
+    },
+    {
+      "method": "switch",
+      "metrics": {
+        "edge_energy": {
+          "mean": 0.13788191863740676,
+          "max": 2.1977895298950987,
+          "band_pixels": 20902
+        },
+        "subject_color_diff": {
+          "mean": 0.0,
+          "max": 0.0,
+          "interior_pixels": 0
+        },
+        "edge_blend": {
+          "mean": 0.13788191863740676,
+          "max": 2.1977895298950987
+        }
+      },
+      "edge_energy_left": 0.23322344911173615,
+      "edge_energy_right": 0.012166469635925582,
+      "side_ratio": 19.16936104645062,
+      "decision": "switch: 遮挡比例 > 0.25 的像素切到方向加权, 共 0 像素",
+      "evidence": "single_side/switch"
+    }
+  ],
+  "conclusions": [
+    "单侧亮源(左): 边缘能量左右比 blur=19.17, visibility=4.69, depth_select=4.69, vis_mix=5.04, switch=19.17. 方向性最强=blur(19.17), 最弱=visibility(4.69); 所有模型比值均>1(亮源侧能量更高), 差异在方向性强度 —— 局部平均的方向性来自 dir_offset 偏移采样, 方向加权来自锥形射线, 取舍以边缘能量左右比量化."
+  ]
+}

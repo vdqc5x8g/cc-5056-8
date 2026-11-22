@@ -14,5 +14,7 @@
   "deform_freq": 0.12,
   "strand_strength": 0.0,
   "linear": true,
-  "use_occluder": true
+  "use_occluder": true,
+  "depth_threshold": null,
+  "occ_threshold": null
 }

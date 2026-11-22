@@ -1,0 +1,397 @@
+{
+  "experiment": "occlusion_switch",
+  "params": {
+    "inner_width": 16.0,
+    "outer_width": 26.666666666666664,
+    "intensity": 1.0,
+    "blur_sigma": 32.0,
+    "dir_offset": 21.333333333333332,
+    "ray_count": 16,
+    "max_dist": 128.0,
+    "cone_angle": 1.2,
+    "falloff_tau": 64.0,
+    "depth_threshold": 64.0,
+    "occ_threshold": 0.25,
+    "allow_negative": false,
+    "deform_amp": 0.0,
+    "deform_freq": 0.12,
+    "strand_strength": 0.0,
+    "linear": true,
+    "use_occluder": true
+  },
+  "reference_model": "depth_select",
+  "reference_responsive": true,
+  "eliminate_ratio": 0.2,
+  "eliminated": [
+    {
+      "method": "blur",
+      "reason": "遮挡出现时参照 ROI 能量变化 -0.016457, 该模型变化 +0.022080(方向相反), 为错误模型"
+    }
+  ],
+  "kept": [
+    "visibility",
+    "vis_mix",
+    "switch"
+  ],
+  "vis_mix_deviation": {
+    "none": 0.009535802306155852,
+    "near": 0.02001913883199894,
+    "far": 0.009516508513813386
+  },
+  "vis_mix_applicable": {
+    "none": true,
+    "near": false,
+    "far": true
+  },
+  "runs": [
+    {
+      "method": "blur",
+      "occluder": "none",
+      "metrics": {
+        "edge_energy": {
+          "mean": 0.08639428387260932,
+          "max": 1.435274429212012,
+          "band_pixels": 20902
+        },
+        "subject_color_diff": {
+          "mean": 0.0,
+          "max": 0.0,
+          "interior_pixels": 0
+        },
+        "edge_blend": {
+          "mean": 0.08639428387260932,
+          "max": 1.435274429212012
+        }
+      },
+      "edge_energy_roi": 0.10204814580429675,
+      "decision": "",
+      "evidence": "occlusion_switch/blur_none"
+    },
+    {
+      "method": "blur",
+      "occluder": "near",
+      "metrics": {
+        "edge_energy": {
+          "mean": 0.09539173431192957,
+          "max": 1.4360016932667,
+          "band_pixels": 20902
+        },
+        "subject_color_diff": {
+          "mean": 0.0,
+          "max": 0.0,
+          "interior_pixels": 0
+        },
+        "edge_blend": {
+          "mean": 0.09539173431192956,
+          "max": 1.4360016932667
+        }
+      },
+      "edge_energy_roi": 0.12412785812048853,
+      "decision": "",
+      "evidence": "occlusion_switch/blur_near"
+    },
+    {
+      "method": "blur",
+      "occluder": "far",
+      "metrics": {
+        "edge_energy": {
+          "mean": 0.09569273244615537,
+          "max": 1.4348501302458638,
+          "band_pixels": 20902
+        },
+        "subject_color_diff": {
+          "mean": 0.0,
+          "max": 0.0,
+          "interior_pixels": 0
+        },
+        "edge_blend": {
+          "mean": 0.09569273244615537,
+          "max": 1.434850130245864
+        }
+      },
+      "edge_energy_roi": 0.10380046666200528,
+      "decision": "",
+      "evidence": "occlusion_switch/blur_far"
+    },
+    {
+      "method": "visibility",
+      "occluder": "none",
+      "metrics": {
+        "edge_energy": {
+          "mean": 0.07322135747196166,
+          "max": 2.794437031467859,
+          "band_pixels": 20902
+        },
+        "subject_color_diff": {
+          "mean": 0.0,
+          "max": 0.0,
+          "interior_pixels": 0
+        },
+        "edge_blend": {
+          "mean": 0.07322135747196166,
+          "max": 2.794437031467859
+        }
+      },
+      "edge_energy_roi": 0.07355983459890096,
+      "decision": "",
+      "evidence": "occlusion_switch/visibility_none"
+    },
+    {
+      "method": "visibility",
+      "occluder": "near",
+      "metrics": {
+        "edge_energy": {
+          "mean": 0.07231715869421569,
+          "max": 3.801449904115098,
+          "band_pixels": 20902
+        },
+        "subject_color_diff": {
+          "mean": 0.0,
+          "max": 0.0,
+          "interior_pixels": 0
+        },
+        "edge_blend": {
+          "mean": 0.07231715869421569,
+          "max": 3.801449904115098
+        }
+      },
+      "edge_energy_roi": 0.05710321352579248,
+      "decision": "",
+      "evidence": "occlusion_switch/visibility_near"
+    },
+    {
+      "method": "visibility",
+      "occluder": "far",
+      "metrics": {
+        "edge_energy": {
+          "mean": 0.07068432994580777,
+          "max": 2.794437031467859,
+          "band_pixels": 20902
+        },
+        "subject_color_diff": {
+          "mean": 0.0,
+          "max": 0.0,
+          "interior_pixels": 0
+        },
+        "edge_blend": {
+          "mean": 0.07068432994580777,
+          "max": 2.794437031467859
+        }
+      },
+      "edge_energy_roi": 0.07409240834930983,
+      "decision": "",
+      "evidence": "occlusion_switch/visibility_far"
+    },
+    {
+      "method": "depth_select",
+      "occluder": "none",
+      "metrics": {
+        "edge_energy": {
+          "mean": 0.07322135747196166,
+          "max": 2.794437031467859,
+          "band_pixels": 20902
+        },
+        "subject_color_diff": {
+          "mean": 0.0,
+          "max": 0.0,
+          "interior_pixels": 0
+        },
+        "edge_blend": {
+          "mean": 0.07322135747196166,
+          "max": 2.794437031467859
+        }
+      },
+      "edge_energy_roi": 0.07355983459890096,
+      "decision": "depth_select: 平均命中距离 <= 64px 的像素用方向加权, 共 65536 像素",
+      "evidence": "occlusion_switch/depth_select_none"
+    },
+    {
+      "method": "depth_select",
+      "occluder": "near",
+      "metrics": {
+        "edge_energy": {
+          "mean": 0.07231715869421569,
+          "max": 3.801449904115098,
+          "band_pixels": 20902
+        },
+        "subject_color_diff": {
+          "mean": 0.0,
+          "max": 0.0,
+          "interior_pixels": 0
+        },
+        "edge_blend": {
+          "mean": 0.07231715869421569,
+          "max": 3.801449904115098
+        }
+      },
+      "edge_energy_roi": 0.05710321352579248,
+      "decision": "depth_select: 平均命中距离 <= 64px 的像素用方向加权, 共 65536 像素",
+      "evidence": "occlusion_switch/depth_select_near"
+    },
+    {
+      "method": "depth_select",
+      "occluder": "far",
+      "metrics": {
+        "edge_energy": {
+          "mean": 0.07068432994580777,
+          "max": 2.794437031467859,
+          "band_pixels": 20902
+        },
+        "subject_color_diff": {
+          "mean": 0.0,
+          "max": 0.0,
+          "interior_pixels": 0
+        },
+        "edge_blend": {
+          "mean": 0.07068432994580777,
+          "max": 2.794437031467859
+        }
+      },
+      "edge_energy_roi": 0.07409240834930983,
+      "decision": "depth_select: 平均命中距离 <= 64px 的像素用方向加权, 共 65536 像素",
+      "evidence": "occlusion_switch/depth_select_far"
+    },
+    {
+      "method": "vis_mix",
+      "occluder": "none",
+      "metrics": {
+        "edge_energy": {
+          "mean": 0.07398245784341517,
+          "max": 2.779562882541317,
+          "band_pixels": 20902
+        },
+        "subject_color_diff": {
+          "mean": 0.0,
+          "max": 0.0,
+          "interior_pixels": 0
+        },
+        "edge_blend": {
+          "mean": 0.07398245784341517,
+          "max": 2.7795628825413172
+        }
+      },
+      "edge_energy_roi": 0.07465691334177879,
+      "decision": "vis_mix: 按可见背景份额混合两种估算",
+      "evidence": "occlusion_switch/vis_mix_none"
+    },
+    {
+      "method": "vis_mix",
+      "occluder": "near",
+      "metrics": {
+        "edge_energy": {
+          "mean": 0.0711135311936314,
+          "max": 3.495804310057719,
+          "band_pixels": 20902
+        },
+        "subject_color_diff": {
+          "mean": 0.0,
+          "max": 0.0,
+          "interior_pixels": 0
+        },
+        "edge_blend": {
+          "mean": 0.07111353119363141,
+          "max": 3.495804310057719
+        }
+      },
+      "edge_energy_roi": 0.05575048244248013,
+      "decision": "vis_mix: 按可见背景份额混合两种估算",
+      "evidence": "occlusion_switch/vis_mix_near"
+    },
+    {
+      "method": "vis_mix",
+      "occluder": "far",
+      "metrics": {
+        "edge_energy": {
+          "mean": 0.07114019453936307,
+          "max": 2.7795608522140065,
+          "band_pixels": 20902
+        },
+        "subject_color_diff": {
+          "mean": 0.0,
+          "max": 0.0,
+          "interior_pixels": 0
+        },
+        "edge_blend": {
+          "mean": 0.07114019453936307,
+          "max": 2.7795608522140065
+        }
+      },
+      "edge_energy_roi": 0.07442712863486907,
+      "decision": "vis_mix: 按可见背景份额混合两种估算",
+      "evidence": "occlusion_switch/vis_mix_far"
+    },
+    {
+      "method": "switch",
+      "occluder": "none",
+      "metrics": {
+        "edge_energy": {
+          "mean": 0.08639428387260932,
+          "max": 1.435274429212012,
+          "band_pixels": 20902
+        },
+        "subject_color_diff": {
+          "mean": 0.0,
+          "max": 0.0,
+          "interior_pixels": 0
+        },
+        "edge_blend": {
+          "mean": 0.08639428387260932,
+          "max": 1.435274429212012
+        }
+      },
+      "edge_energy_roi": 0.10204814580429675,
+      "decision": "switch: 遮挡比例 > 0.25 的像素切到方向加权, 共 0 像素",
+      "evidence": "occlusion_switch/switch_none"
+    },
+    {
+      "method": "switch",
+      "occluder": "near",
+      "metrics": {
+        "edge_energy": {
+          "mean": 0.07405367764823267,
+          "max": 3.801449904115098,
+          "band_pixels": 20902
+        },
+        "subject_color_diff": {
+          "mean": 0.0,
+          "max": 0.0,
+          "interior_pixels": 0
+        },
+        "edge_blend": {
+          "mean": 0.07405367764823267,
+          "max": 3.801449904115098
+        }
+      },
+      "edge_energy_roi": 0.06073338012109078,
+      "decision": "switch: 遮挡比例 > 0.25 的像素切到方向加权, 共 5337 像素",
+      "evidence": "occlusion_switch/switch_near"
+    },
+    {
+      "method": "switch",
+      "occluder": "far",
+      "metrics": {
+        "edge_energy": {
+          "mean": 0.06808384193691855,
+          "max": 1.8733556295927956,
+          "band_pixels": 20902
+        },
+        "subject_color_diff": {
+          "mean": 0.0,
+          "max": 0.0,
+          "interior_pixels": 0
+        },
+        "edge_blend": {
+          "mean": 0.06808384193691855,
+          "max": 1.8733556295927956
+        }
+      },
+      "edge_energy_roi": 0.06734017992560339,
+      "decision": "switch: 遮挡比例 > 0.25 的像素切到方向加权, 共 5444 像素",
+      "evidence": "occlusion_switch/switch_far"
+    }
+  ],
+  "conclusions": [
+    "遮挡切换(背景亮度不变): 参照 depth_select 的 ROI 边缘能量随遮挡变化 -0.016457; 淘汰模型 ['blur'](变化方向相反或幅度不足), 保留 ['visibility', 'vis_mix', 'switch'].",
+    "vis_mix 相对参照的 RMS 偏差: none=0.0095(适用), near=0.0200(不适用), far=0.0095(适用) (容差 0.02)."
+  ]
+}

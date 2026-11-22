@@ -1,0 +1,294 @@
+{
+  "experiment": "fine_structure",
+  "params": {
+    "inner_width": 16.0,
+    "outer_width": 26.666666666666664,
+    "intensity": 1.0,
+    "blur_sigma": 32.0,
+    "dir_offset": 21.333333333333332,
+    "ray_count": 16,
+    "max_dist": 128.0,
+    "cone_angle": 1.2,
+    "falloff_tau": 64.0,
+    "depth_threshold": 64.0,
+    "occ_threshold": 0.25,
+    "allow_negative": false,
+    "deform_amp": 0.0,
+    "deform_freq": 0.12,
+    "strand_strength": 0.0,
+    "linear": true,
+    "use_occluder": true
+  },
+  "runs": [
+    {
+      "subject": "branches",
+      "method": "blur",
+      "metrics": {
+        "edge_energy": {
+          "mean": 0.08639428387260932,
+          "max": 1.435274429212012,
+          "band_pixels": 20902
+        },
+        "subject_color_diff": {
+          "mean": 0.0,
+          "max": 0.0,
+          "interior_pixels": 0
+        },
+        "edge_blend": {
+          "mean": 0.08639428387260932,
+          "max": 1.435274429212012
+        }
+      },
+      "outside_band_diff": 1.5436325596205462e-08,
+      "decision": "",
+      "evidence": "fine_structure/branches_blur"
+    },
+    {
+      "subject": "branches",
+      "method": "visibility",
+      "metrics": {
+        "edge_energy": {
+          "mean": 0.07322135747196166,
+          "max": 2.794437031467859,
+          "band_pixels": 20902
+        },
+        "subject_color_diff": {
+          "mean": 0.0,
+          "max": 0.0,
+          "interior_pixels": 0
+        },
+        "edge_blend": {
+          "mean": 0.07322135747196166,
+          "max": 2.794437031467859
+        }
+      },
+      "outside_band_diff": 6.4116411350474626e-09,
+      "decision": "",
+      "evidence": "fine_structure/branches_visibility"
+    },
+    {
+      "subject": "branches",
+      "method": "depth_select",
+      "metrics": {
+        "edge_energy": {
+          "mean": 0.07322135747196166,
+          "max": 2.794437031467859,
+          "band_pixels": 20902
+        },
+        "subject_color_diff": {
+          "mean": 0.0,
+          "max": 0.0,
+          "interior_pixels": 0
+        },
+        "edge_blend": {
+          "mean": 0.07322135747196166,
+          "max": 2.794437031467859
+        }
+      },
+      "outside_band_diff": 6.4116411350474626e-09,
+      "decision": "depth_select: 平均命中距离 <= 64px 的像素用方向加权, 共 65536 像素",
+      "evidence": "fine_structure/branches_depth_select"
+    },
+    {
+      "subject": "branches",
+      "method": "vis_mix",
+      "metrics": {
+        "edge_energy": {
+          "mean": 0.07398245784341517,
+          "max": 2.779562882541317,
+          "band_pixels": 20902
+        },
+        "subject_color_diff": {
+          "mean": 0.0,
+          "max": 0.0,
+          "interior_pixels": 0
+        },
+        "edge_blend": {
+          "mean": 0.07398245784341517,
+          "max": 2.7795628825413172
+        }
+      },
+      "outside_band_diff": 6.501508228934845e-09,
+      "decision": "vis_mix: 按可见背景份额混合两种估算",
+      "evidence": "fine_structure/branches_vis_mix"
+    },
+    {
+      "subject": "branches",
+      "method": "switch",
+      "metrics": {
+        "edge_energy": {
+          "mean": 0.08639428387260932,
+          "max": 1.435274429212012,
+          "band_pixels": 20902
+        },
+        "subject_color_diff": {
+          "mean": 0.0,
+          "max": 0.0,
+          "interior_pixels": 0
+        },
+        "edge_blend": {
+          "mean": 0.08639428387260932,
+          "max": 1.435274429212012
+        }
+      },
+      "outside_band_diff": 1.5436325596205462e-08,
+      "decision": "switch: 遮挡比例 > 0.25 的像素切到方向加权, 共 0 像素",
+      "evidence": "fine_structure/branches_switch"
+    },
+    {
+      "subject": "branches",
+      "method": "global_blur_control",
+      "metrics": {
+        "subject_color_diff": {
+          "mean": 0.0,
+          "max": 0.0,
+          "interior_pixels": 0
+        },
+        "edge_blend": {
+          "mean": 0.32813435739890784,
+          "max": 12.677305065418565
+        }
+      },
+      "outside_band_diff": 0.11578570487187746,
+      "decision": "整体模糊对照: 无边缘带限制, 带外像素被改动",
+      "evidence": "fine_structure/branches_global_blur_control"
+    },
+    {
+      "subject": "hard",
+      "method": "blur",
+      "metrics": {
+        "edge_energy": {
+          "mean": 0.07123861597210229,
+          "max": 1.3042212424408912,
+          "band_pixels": 20495
+        },
+        "subject_color_diff": {
+          "mean": 0.0,
+          "max": 0.0,
+          "interior_pixels": 5826
+        },
+        "edge_blend": {
+          "mean": 0.07123861597210229,
+          "max": 1.3042212424408912
+        }
+      },
+      "outside_band_diff": 6.272874006635669e-09,
+      "decision": "",
+      "evidence": "fine_structure/hard_blur"
+    },
+    {
+      "subject": "hard",
+      "method": "visibility",
+      "metrics": {
+        "edge_energy": {
+          "mean": 0.06355571825191093,
+          "max": 2.602148159676832,
+          "band_pixels": 20495
+        },
+        "subject_color_diff": {
+          "mean": 0.0,
+          "max": 0.0,
+          "interior_pixels": 5826
+        },
+        "edge_blend": {
+          "mean": 0.06355571825191093,
+          "max": 2.602148159676832
+        }
+      },
+      "outside_band_diff": 1.2586524861132277e-09,
+      "decision": "",
+      "evidence": "fine_structure/hard_visibility"
+    },
+    {
+      "subject": "hard",
+      "method": "depth_select",
+      "metrics": {
+        "edge_energy": {
+          "mean": 0.06352325679551535,
+          "max": 2.602148159676832,
+          "band_pixels": 20495
+        },
+        "subject_color_diff": {
+          "mean": 0.0,
+          "max": 0.0,
+          "interior_pixels": 5826
+        },
+        "edge_blend": {
+          "mean": 0.06352325679551535,
+          "max": 2.602148159676832
+        }
+      },
+      "outside_band_diff": 1.2586524861132277e-09,
+      "decision": "depth_select: 平均命中距离 <= 64px 的像素用方向加权, 共 65456 像素",
+      "evidence": "fine_structure/hard_depth_select"
+    },
+    {
+      "subject": "hard",
+      "method": "vis_mix",
+      "metrics": {
+        "edge_energy": {
+          "mean": 0.062584180104138,
+          "max": 2.5232193317203495,
+          "band_pixels": 20495
+        },
+        "subject_color_diff": {
+          "mean": 0.0,
+          "max": 0.0,
+          "interior_pixels": 5826
+        },
+        "edge_blend": {
+          "mean": 0.062584180104138,
+          "max": 2.5232193317203495
+        }
+      },
+      "outside_band_diff": 1.2586524861132277e-09,
+      "decision": "vis_mix: 按可见背景份额混合两种估算",
+      "evidence": "fine_structure/hard_vis_mix"
+    },
+    {
+      "subject": "hard",
+      "method": "switch",
+      "metrics": {
+        "edge_energy": {
+          "mean": 0.07123861597210229,
+          "max": 1.3042212424408912,
+          "band_pixels": 20495
+        },
+        "subject_color_diff": {
+          "mean": 0.0,
+          "max": 0.0,
+          "interior_pixels": 5826
+        },
+        "edge_blend": {
+          "mean": 0.07123861597210229,
+          "max": 1.3042212424408912
+        }
+      },
+      "outside_band_diff": 6.272874006635669e-09,
+      "decision": "switch: 遮挡比例 > 0.25 的像素切到方向加权, 共 0 像素",
+      "evidence": "fine_structure/hard_switch"
+    },
+    {
+      "subject": "hard",
+      "method": "global_blur_control",
+      "metrics": {
+        "subject_color_diff": {
+          "mean": 0.07368061928151311,
+          "max": 0.5308194438680351,
+          "interior_pixels": 5826
+        },
+        "edge_blend": {
+          "mean": 0.3657985290770416,
+          "max": 12.683935486703623
+        }
+      },
+      "outside_band_diff": 0.11288953645910958,
+      "decision": "整体模糊对照: 无边缘带限制, 带外像素被改动",
+      "evidence": "fine_structure/hard_global_blur_control"
+    }
+  ],
+  "conclusions": [
+    "[branches] 包光模型带外改动量最大=1.54e-08 (深层内部像素数=0, 主体色差最大=0.000000); 整体模糊对照带外改动量=0.115786 主体色差=0.000000 —— 整体模糊在边缘带之外改动像素, 不能替代包光.",
+    "[hard] 包光模型带外改动量最大=6.27e-09 (深层内部像素数=5826, 主体色差最大=0.000000); 整体模糊对照带外改动量=0.112890 主体色差=0.073681 —— 整体模糊在边缘带之外改动像素, 不能替代包光."
+  ]
+}

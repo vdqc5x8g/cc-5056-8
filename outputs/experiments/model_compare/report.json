@@ -1,0 +1,248 @@
+{
+  "experiment": "model_compare",
+  "params": {
+    "inner_width": 16.0,
+    "outer_width": 26.666666666666664,
+    "intensity": 1.0,
+    "blur_sigma": 32.0,
+    "dir_offset": 21.333333333333332,
+    "ray_count": 16,
+    "max_dist": 128.0,
+    "cone_angle": 1.2,
+    "falloff_tau": 64.0,
+    "depth_threshold": 64.0,
+    "occ_threshold": 0.25,
+    "allow_negative": false,
+    "deform_amp": 0.0,
+    "deform_freq": 0.12,
+    "strand_strength": 0.0,
+    "linear": true,
+    "use_occluder": true
+  },
+  "runs": [
+    {
+      "subject": "branches",
+      "method": "blur",
+      "metrics": {
+        "edge_energy": {
+          "mean": 0.08639428387260932,
+          "max": 1.435274429212012,
+          "band_pixels": 20902
+        },
+        "subject_color_diff": {
+          "mean": 0.0,
+          "max": 0.0,
+          "interior_pixels": 0
+        },
+        "edge_blend": {
+          "mean": 0.08639428387260932,
+          "max": 1.435274429212012
+        }
+      },
+      "decision": "",
+      "evidence": "model_compare/branches_blur"
+    },
+    {
+      "subject": "branches",
+      "method": "visibility",
+      "metrics": {
+        "edge_energy": {
+          "mean": 0.07322135747196166,
+          "max": 2.794437031467859,
+          "band_pixels": 20902
+        },
+        "subject_color_diff": {
+          "mean": 0.0,
+          "max": 0.0,
+          "interior_pixels": 0
+        },
+        "edge_blend": {
+          "mean": 0.07322135747196166,
+          "max": 2.794437031467859
+        }
+      },
+      "decision": "",
+      "evidence": "model_compare/branches_visibility"
+    },
+    {
+      "subject": "branches",
+      "method": "depth_select",
+      "metrics": {
+        "edge_energy": {
+          "mean": 0.07322135747196166,
+          "max": 2.794437031467859,
+          "band_pixels": 20902
+        },
+        "subject_color_diff": {
+          "mean": 0.0,
+          "max": 0.0,
+          "interior_pixels": 0
+        },
+        "edge_blend": {
+          "mean": 0.07322135747196166,
+          "max": 2.794437031467859
+        }
+      },
+      "decision": "depth_select: 平均命中距离 <= 64px 的像素用方向加权, 共 65536 像素",
+      "evidence": "model_compare/branches_depth_select"
+    },
+    {
+      "subject": "branches",
+      "method": "vis_mix",
+      "metrics": {
+        "edge_energy": {
+          "mean": 0.07398245784341517,
+          "max": 2.779562882541317,
+          "band_pixels": 20902
+        },
+        "subject_color_diff": {
+          "mean": 0.0,
+          "max": 0.0,
+          "interior_pixels": 0
+        },
+        "edge_blend": {
+          "mean": 0.07398245784341517,
+          "max": 2.7795628825413172
+        }
+      },
+      "decision": "vis_mix: 按可见背景份额混合两种估算",
+      "evidence": "model_compare/branches_vis_mix"
+    },
+    {
+      "subject": "branches",
+      "method": "switch",
+      "metrics": {
+        "edge_energy": {
+          "mean": 0.08639428387260932,
+          "max": 1.435274429212012,
+          "band_pixels": 20902
+        },
+        "subject_color_diff": {
+          "mean": 0.0,
+          "max": 0.0,
+          "interior_pixels": 0
+        },
+        "edge_blend": {
+          "mean": 0.08639428387260932,
+          "max": 1.435274429212012
+        }
+      },
+      "decision": "switch: 遮挡比例 > 0.25 的像素切到方向加权, 共 0 像素",
+      "evidence": "model_compare/branches_switch"
+    },
+    {
+      "subject": "hard",
+      "method": "blur",
+      "metrics": {
+        "edge_energy": {
+          "mean": 0.07123861597210229,
+          "max": 1.3042212424408912,
+          "band_pixels": 20495
+        },
+        "subject_color_diff": {
+          "mean": 0.0,
+          "max": 0.0,
+          "interior_pixels": 5826
+        },
+        "edge_blend": {
+          "mean": 0.07123861597210229,
+          "max": 1.3042212424408912
+        }
+      },
+      "decision": "",
+      "evidence": "model_compare/hard_blur"
+    },
+    {
+      "subject": "hard",
+      "method": "visibility",
+      "metrics": {
+        "edge_energy": {
+          "mean": 0.06355571825191093,
+          "max": 2.602148159676832,
+          "band_pixels": 20495
+        },
+        "subject_color_diff": {
+          "mean": 0.0,
+          "max": 0.0,
+          "interior_pixels": 5826
+        },
+        "edge_blend": {
+          "mean": 0.06355571825191093,
+          "max": 2.602148159676832
+        }
+      },
+      "decision": "",
+      "evidence": "model_compare/hard_visibility"
+    },
+    {
+      "subject": "hard",
+      "method": "depth_select",
+      "metrics": {
+        "edge_energy": {
+          "mean": 0.06352325679551535,
+          "max": 2.602148159676832,
+          "band_pixels": 20495
+        },
+        "subject_color_diff": {
+          "mean": 0.0,
+          "max": 0.0,
+          "interior_pixels": 5826
+        },
+        "edge_blend": {
+          "mean": 0.06352325679551535,
+          "max": 2.602148159676832
+        }
+      },
+      "decision": "depth_select: 平均命中距离 <= 64px 的像素用方向加权, 共 65456 像素",
+      "evidence": "model_compare/hard_depth_select"
+    },
+    {
+      "subject": "hard",
+      "method": "vis_mix",
+      "metrics": {
+        "edge_energy": {
+          "mean": 0.062584180104138,
+          "max": 2.5232193317203495,
+          "band_pixels": 20495
+        },
+        "subject_color_diff": {
+          "mean": 0.0,
+          "max": 0.0,
+          "interior_pixels": 5826
+        },
+        "edge_blend": {
+          "mean": 0.062584180104138,
+          "max": 2.5232193317203495
+        }
+      },
+      "decision": "vis_mix: 按可见背景份额混合两种估算",
+      "evidence": "model_compare/hard_vis_mix"
+    },
+    {
+      "subject": "hard",
+      "method": "switch",
+      "metrics": {
+        "edge_energy": {
+          "mean": 0.07123861597210229,
+          "max": 1.3042212424408912,
+          "band_pixels": 20495
+        },
+        "subject_color_diff": {
+          "mean": 0.0,
+          "max": 0.0,
+          "interior_pixels": 5826
+        },
+        "edge_blend": {
+          "mean": 0.07123861597210229,
+          "max": 1.3042212424408912
+        }
+      },
+      "decision": "switch: 遮挡比例 > 0.25 的像素切到方向加权, 共 0 像素",
+      "evidence": "model_compare/hard_switch"
+    }
+  ],
+  "conclusions": [
+    "[branches] 局部平均(blur) 边缘能量=0.0864 主体色差=0.000000; 方向加权(visibility) 边缘能量=0.0732 主体色差=0.000000; 边缘融合: blur=0.0864 vs visibility=0.0732 (深层内部像素数=0); 注意: 该样本无深层内部像素(interior_pixels=0), 内部保留指标为空集, 差异只看边缘融合",
+    "[hard] 局部平均(blur) 边缘能量=0.0712 主体色差=0.000000; 方向加权(visibility) 边缘能量=0.0636 主体色差=0.000000; 边缘融合: blur=0.0712 vs visibility=0.0636 (深层内部像素数=5826)"
+  ]
+}

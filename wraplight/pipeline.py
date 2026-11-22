@@ -6,6 +6,7 @@ from .band import band_from_alpha, band_from_mask
 from .colorspace import linear_to_srgb, srgb_to_linear
 from .composite import composite_base, composite_with_wrap
 from .deformer import apply_deformer
+from .metrics import wrap_metrics
 from .wrap import compute_wrap
 
 
@@ -20,6 +21,7 @@ class PipelineOutput:
     signed_dist: np.ndarray       # 符号距离
     debug: dict = field(default_factory=dict)
     params: object = None
+    metrics: dict = field(default_factory=dict)  # 边缘能量/主体色差/边缘融合
 
 
 def apply_occluder_to_bg(bg, occluder, plate_color):
@@ -56,7 +58,7 @@ def run_pipeline(fg, alpha, bg, params, occluder=None, geom_mask=None):
 
     off = composite_base(fg_c, alpha, bg_c)
     on = composite_with_wrap(fg_c, alpha, bg_c, wrap_layer)
-    return PipelineOutput(
+    out = PipelineOutput(
         composite_on=on,
         composite_off=off,
         wrap_layer=wrap_layer,
@@ -67,6 +69,8 @@ def run_pipeline(fg, alpha, bg, params, occluder=None, geom_mask=None):
         debug=result.debug,
         params=params,
     )
+    out.metrics = wrap_metrics(out, fg_c)
+    return out
 
 
 def to_display(img_linear, params):

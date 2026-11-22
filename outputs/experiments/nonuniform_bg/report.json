@@ -1,0 +1,138 @@
+{
+  "experiment": "nonuniform_bg",
+  "params": {
+    "inner_width": 16.0,
+    "outer_width": 26.666666666666664,
+    "intensity": 1.0,
+    "blur_sigma": 32.0,
+    "dir_offset": 21.333333333333332,
+    "ray_count": 16,
+    "max_dist": 128.0,
+    "cone_angle": 1.2,
+    "falloff_tau": 64.0,
+    "depth_threshold": 64.0,
+    "occ_threshold": 0.25,
+    "allow_negative": false,
+    "deform_amp": 0.0,
+    "deform_freq": 0.12,
+    "strand_strength": 0.0,
+    "linear": true,
+    "use_occluder": true
+  },
+  "vis_mix_tolerance": 0.02,
+  "vis_mix_applicable": true,
+  "runs": [
+    {
+      "method": "blur",
+      "metrics": {
+        "edge_energy": {
+          "mean": 0.11950678068298376,
+          "max": 1.8773600736058491,
+          "band_pixels": 20902
+        },
+        "subject_color_diff": {
+          "mean": 0.0,
+          "max": 0.0,
+          "interior_pixels": 0
+        },
+        "edge_blend": {
+          "mean": 0.11950678068298376,
+          "max": 1.8773600736058491
+        }
+      },
+      "decision": "",
+      "evidence": "nonuniform_bg/blur",
+      "rms_vs_depth_select": 0.16496332450294854
+    },
+    {
+      "method": "visibility",
+      "metrics": {
+        "edge_energy": {
+          "mean": 0.1272631180660825,
+          "max": 3.1245463655857098,
+          "band_pixels": 20902
+        },
+        "subject_color_diff": {
+          "mean": 0.0,
+          "max": 0.0,
+          "interior_pixels": 0
+        },
+        "edge_blend": {
+          "mean": 0.1272631180660825,
+          "max": 3.1245463655857098
+        }
+      },
+      "decision": "",
+      "evidence": "nonuniform_bg/visibility",
+      "rms_vs_depth_select": 0.0
+    },
+    {
+      "method": "depth_select",
+      "metrics": {
+        "edge_energy": {
+          "mean": 0.1272631180660825,
+          "max": 3.1245463655857098,
+          "band_pixels": 20902
+        },
+        "subject_color_diff": {
+          "mean": 0.0,
+          "max": 0.0,
+          "interior_pixels": 0
+        },
+        "edge_blend": {
+          "mean": 0.1272631180660825,
+          "max": 3.1245463655857098
+        }
+      },
+      "decision": "depth_select: 平均命中距离 <= 64px 的像素用方向加权, 共 65536 像素",
+      "evidence": "nonuniform_bg/depth_select"
+    },
+    {
+      "method": "vis_mix",
+      "metrics": {
+        "edge_energy": {
+          "mean": 0.12762076167024097,
+          "max": 3.061283234946414,
+          "band_pixels": 20902
+        },
+        "subject_color_diff": {
+          "mean": 0.0,
+          "max": 0.0,
+          "interior_pixels": 0
+        },
+        "edge_blend": {
+          "mean": 0.12762076167024097,
+          "max": 3.061283234946414
+        }
+      },
+      "decision": "vis_mix: 按可见背景份额混合两种估算",
+      "evidence": "nonuniform_bg/vis_mix",
+      "rms_vs_depth_select": 0.008939539193186597
+    },
+    {
+      "method": "switch",
+      "metrics": {
+        "edge_energy": {
+          "mean": 0.11950678068298376,
+          "max": 1.8773600736058491,
+          "band_pixels": 20902
+        },
+        "subject_color_diff": {
+          "mean": 0.0,
+          "max": 0.0,
+          "interior_pixels": 0
+        },
+        "edge_blend": {
+          "mean": 0.11950678068298376,
+          "max": 1.8773600736058491
+        }
+      },
+      "decision": "switch: 遮挡比例 > 0.25 的像素切到方向加权, 共 0 像素",
+      "evidence": "nonuniform_bg/switch",
+      "rms_vs_depth_select": 0.16496332450294854
+    }
+  ],
+  "conclusions": [
+    "非均匀背景: 各模型相对 depth_select 参照的包光层 RMS 偏差 blur=0.1650, switch=0.1650, vis_mix=0.0089, visibility=0.0000; vis_mix 偏差<容差 0.02, 在本场景适用."
+  ]
+}

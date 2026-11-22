@@ -6,7 +6,7 @@ from dataclasses import asdict, dataclass, fields
 class WrapParams:
     """包光合成参数, 可序列化为 JSON 保存/复现."""
 
-    method: str = "visibility"   # blur | falloff | visibility
+    method: str = "visibility"   # blur | falloff | visibility | depth_select | vis_mix | switch
     inner_width: float = 6.0     # 边缘带向前景内部宽度(px)
     outer_width: float = 10.0    # 边缘带向背景侧宽度(px)
     intensity: float = 1.0       # 包光整体强度
@@ -22,6 +22,9 @@ class WrapParams:
     strand_strength: float = 0.0  # 前景变形器: 发丝门控强度 0..1
     linear: bool = True          # 线性光度开关(关闭则在 sRGB 域计算, 仅用于对照)
     use_occluder: bool = True    # 是否启用遮挡物输入
+    # 组合贡献模型的判定门槛: 默认 None, 用到时必须显式给出 —— 不以默认值遮错
+    depth_threshold: float = None  # depth_select: 局部深度(平均命中距离)门槛(px)
+    occ_threshold: float = None    # switch: 遮挡比例门槛(0..1), 超过则切到方向加权
 
     def to_json(self):
         return json.dumps(asdict(self), ensure_ascii=False, indent=2)
